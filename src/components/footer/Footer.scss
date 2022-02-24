@@ -1,0 +1,126 @@
+@use '../../sass/' as *;
+
+.footer {
+    position: relative;
+    background-color: $main-color;
+
+    &__content {
+        position: relative;
+        max-width: 68%;
+        display: flex;
+        flex-direction: column;
+        padding: 5rem 1rem 2rem 1rem;
+
+        @include tablet {
+            max-width: 90%;
+        }
+
+        @include mobile {
+            max-width: 100%;
+            padding: 2rem 0.5rem 1rem 0.5rem;
+        }
+
+
+        &__header {
+            @include flex(center, space-between);
+            font-size: 2rem;
+            font-weight: 500;
+            width: 100%;
+            margin-bottom: 20px;
+
+            @include mobile {
+                @include flex(center, unset);
+                flex-direction: column;
+                font-size: 1.2rem;
+
+                &__logo {
+                    display: none;
+                }
+            }
+
+            &__link {
+                @include flex(center, flex-end);
+                color: #fff;
+
+                &>* {
+                    margin-left: 30px;
+                }
+
+                @include mobile {
+                    @include flex(center, space-between);
+                    &>* {
+                        margin-left: 0;
+                    }
+                }
+            }
+            
+            & > * {
+                width: 100%;
+                @include tablet {
+                    width: 66%;
+                }
+            }
+
+        }
+
+        &__menus {
+            position: relative;
+            @include flex(center, space-between);
+
+        }
+
+        &__menu {
+            @include flex(flex-start, flex-start);
+            align-self: flex-start;
+            flex-direction: column;
+
+            @include mobile {
+                margin-left: 1rem;
+            }
+            
+            &__header {
+                color: $txt-white;
+                font-size: 2rem;
+                font-weight: 900;
+                margin-bottom: 0.5rem;
+
+                @include mobile {
+                    font-size: 0.84rem;
+                    font-weight: 600;
+                    line-height: 1.2rem;
+                    margin-bottom: 0.2rem;
+                }
+            }
+
+            & > a {
+                color: $txt-white;
+                font-size: 1.3rem;
+                font-weight: 300;
+                opacity: 0.8;
+                margin-bottom: 0.8rem;
+
+                &:hover {
+                    color: $txt-second-color;
+                }
+
+                @include mobile {
+                    font-size: 0.76rem;
+                    line-height: 1.2rem;
+                    margin-bottom: 0;
+                }
+            }
+        }
+
+        &__footer {
+            color: $txt-white;
+            font-size: 1.3rem;
+            font-weight: 300;
+            margin-top: 1.8rem;
+            text-align: center;
+
+            @include mobile {
+                font-size: 0.5rem;
+            }
+        }
+    }
+}

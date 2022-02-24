@@ -1,0 +1,22 @@
+@use '../../sass/' as *;
+.section {
+    margin-bottom: 80px;
+
+    @include mobile {
+        margin-bottom: 40px;
+    }
+
+    & > * ~ * {
+        margin-top: 70px;
+
+        @include mobile {
+            margin-top: 30px;
+        }
+    }
+
+    &__title {
+        font-size: 2rem;
+        text-transform: capitalize;
+        text-align: center;
+    }
+}
