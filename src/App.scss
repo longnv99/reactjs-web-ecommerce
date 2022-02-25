@@ -14,10 +14,6 @@
 
 html {
   font-size: 13px;
-
-  @include mobile {
-    font-size: 11px;
-  }
 }
 
 body {
@@ -45,7 +41,7 @@ a {
   }
 
   @include mobile {
-      padding: 0 10px;
+      padding: 0 15px;
   }
 }
 
