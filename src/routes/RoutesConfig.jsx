@@ -5,7 +5,7 @@ import CartPage from '../pages/CartPage'
 import ProductPage from '../pages/ProductPage'
 import LoginPage from '../pages/LoginPage'
 import RegisterPage from '../pages/RegisterPage'
-import CatalogPage from '../pages/CatalogPage'
+import CatalogPage from '../pages/catalog-page/CatalogPage'
 
 const RoutesConfig = () => {
     return (
