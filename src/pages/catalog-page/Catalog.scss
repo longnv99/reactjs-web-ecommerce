@@ -1,0 +1,157 @@
+@use '../../sass/' as *;
+
+.catalog {
+    @include flex(flex-start, flex-start);
+
+    @include tablet {
+        flex-direction: column;
+    }
+
+    &__filter {
+        width: 20%;
+
+        @include tablet {
+            width: 50%;
+            height: 100vh;
+            background-color: $main-bg;
+            padding: 1rem;
+            position: fixed;
+            left: 0;
+            top: $header-tablet-height;
+            z-index: 99;
+            box-shadow: $box-shadow;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            overflow-y: scroll;
+        }
+
+        @include mobile {
+            top: $header-mobile-height;
+            width: 65%;
+        }
+
+        &__header {
+            font-size: 1.4rem;
+            font-weight: 700;
+            text-transform: capitalize;
+            margin-bottom: 16px;
+
+            & > i {
+                padding-right: 0.6rem;
+            }
+
+            @include mobile {
+                margin-bottom: 5px;
+            }
+
+        }
+
+        &__widget {
+            margin-bottom: 1rem;
+            padding-left: 2rem;
+
+            @include mobile {
+                margin-bottom: 8px;
+            }
+
+            &__title {
+                font-size: 1.25rem;
+                font-weight: 500;
+                text-transform: capitalize;
+                margin-bottom: 8px;
+
+                & > i {
+                    padding-right: 0.8rem;
+                }
+
+                @include mobile {
+                    margin-bottom: 4px;
+                }
+            }
+
+            &__content {
+                color: $txt-main-color;
+
+                &__item {
+                    margin-bottom: 8px;
+                }
+
+                @include mobile {
+                    margin-bottom: unset;
+                }
+
+            }
+        }
+
+        &__close {
+            display: none;
+            font-size: 4rem;
+            position: absolute;
+            top: 40%;
+            right: 4%;
+            animation-name: prev;
+            animation-duration:1.5s;
+            animation-iteration-count:infinite;
+
+            @include tablet {
+                display: block;
+                font-size: 4rem;
+            }
+
+            @include mobile {
+                font-size: 2.4rem;
+            }
+        }
+
+        &.active {
+            transform: translateX(0);
+        }
+    }
+
+    &__content {
+        flex-grow: 1;
+
+        @include tablet {
+            width: 100%;
+        }
+    }
+
+    &__filter__toggle {
+        display: none;
+        position: relative;
+        font-size: 4rem;
+        z-index: 98;
+        position: fixed;
+        top: 45%;
+        left: 0;
+        animation-name: next;
+        animation-duration:1.5s;
+        animation-iteration-count:infinite;
+
+        @include tablet {
+            display: block;
+        }
+
+        @include mobile {
+            font-size: 2.4rem;
+        }
+    }
+}
+
+@keyframes next {
+    0% {
+        left: -20px;
+    }
+    100% {
+        left: 5px;
+    }
+}
+
+@keyframes prev {
+    0% {
+        right: 0px;
+    }
+    100% {
+        right: 7px;
+    }
+}
