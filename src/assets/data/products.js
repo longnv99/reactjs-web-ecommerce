@@ -183,10 +183,13 @@ const getProductPopular = (count) => {
     return productNew.slice(start, start + count)
 }
 
+const getProductByPathName = (path) => products.find(e => e.pathName === path)
+
 const dataProducts = {
     getAllProduct,
     getProductDiscount,
-    getProductPopular
+    getProductPopular,
+    getProductByPathName,
 }
 
 

@@ -40,6 +40,7 @@ const HomePage = () => {
                     </div>
                 </SectionBody>
             </Section>
+            <div className="separate"></div>
             <Section>
                 <SectionTitle>SALE UPTO 66%</SectionTitle>
                 <img src={banner} alt="" className="banner"/>
@@ -62,6 +63,7 @@ const HomePage = () => {
                     </div>
                 </SectionBody>
             </Section>
+            <div className="separate"></div>
             <Section>
                 <SectionTitle>Sản phẩm bán chạy</SectionTitle>
                 <SectionBody>
