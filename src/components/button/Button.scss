@@ -56,4 +56,8 @@
             padding: 0.5rem 1rem;
         }
     }
+
+    &-active:hover {
+        background: $txt-second-color;
+    }
 }
