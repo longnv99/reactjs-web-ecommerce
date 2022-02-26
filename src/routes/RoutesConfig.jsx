@@ -12,9 +12,8 @@ const RoutesConfig = () => {
         <Routes>
             <Route path='/' element={<HomePage />}/>
             <Route path='/cart' element={<CartPage/>}/>
-            <Route path='/catalog' element={<CatalogPage/>}>
-                <Route path=':pathName' element={<ProductPage/>}/>
-            </Route>
+            <Route path='/catalog' element={<CatalogPage/>}/>
+            <Route path='/catalog/:pathName' element={<ProductPage/>}/>
             <Route path='/login' element={<LoginPage/>}/>
             <Route path='/register' element={<RegisterPage/>}/>
         </Routes>
