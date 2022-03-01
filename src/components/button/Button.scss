@@ -60,4 +60,11 @@
     &-active:hover {
         background: $txt-second-color;
     }
+
+    &-block {
+        width: 100%;
+        :hover{
+            background: $txt-second-color;
+        }
+    }
 }

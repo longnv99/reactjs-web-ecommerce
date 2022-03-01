@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import './Header.scss'
 import { Link, useLocation } from 'react-router-dom'
 import logo from '../../assets/images/logo.png'
+import { useSelector } from 'react-redux'
 
 const headerNav = [
     {
@@ -28,6 +29,14 @@ const Header = () => {
     const activeNav = headerNav.findIndex(nav => nav.path === pathname);
     
     const headerRef = useRef(null)
+
+    const cartItems = useSelector((state) => state.cart.cartItems)
+
+    let sum = 0;
+
+    cartItems.forEach((e) => {
+        sum += e.quantity
+    })
 
     useEffect(() => {
         window.addEventListener("scroll", () => {
@@ -89,6 +98,13 @@ const Header = () => {
                             <Link to='/cart'>
                                 <i className="fa-solid fa-cart-shopping"></i>
                             </Link>
+                            {
+                                cartItems.length > 0 ? (
+                                    <div className="header__menu__right__item__count">
+                                        {sum}
+                                    </div>
+                                ) : null
+                            }
                         </div>
                     </div>
                 </div>
