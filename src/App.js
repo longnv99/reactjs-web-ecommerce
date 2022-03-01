@@ -3,6 +3,7 @@ import { BrowserRouter } from 'react-router-dom';
 import Header from './components/header/Header'
 import Footer from './components/footer/Footer'
 import RoutesConfig from './routes/RoutesConfig';
+import ProductModal from './components/product-modal/ProductModal';
 
 function App() {
     return (
@@ -14,6 +15,7 @@ function App() {
                     </div>
                 </div>
             <Footer/>
+            <ProductModal />
         </BrowserRouter>
     );
 }

@@ -185,11 +185,25 @@ const getProductPopular = (count) => {
 
 const getProductByPathName = (path) => products.find(e => e.pathName === path)
 
+const getCartItems = (cartItems) => {
+    let cart = []
+    if(cartItems.length > 0) {
+        cartItems.forEach(element => {
+            cart.push({
+                ...element,
+                info: getProductByPathName(element.pathName)
+            })
+        });
+    }
+    return cart
+}
+
 const dataProducts = {
     getAllProduct,
     getProductDiscount,
     getProductPopular,
     getProductByPathName,
+    getCartItems
 }
 
 
