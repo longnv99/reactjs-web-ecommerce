@@ -1,13 +1,33 @@
 import React, { useEffect, useState } from 'react'
 import './ProductDetail.scss'
+import { useDispatch, useSelector } from 'react-redux'
 
 import Button from '../button/Button'
 
 import numberWithCommas from '../../utils/convertNumber'
+import { addItem } from '../../redux/actions/cart_action'
+import { removeModal } from '../../redux/actions/modal_action'
+import { useNavigate } from 'react-router-dom'
 
 const ProductDetail = (props) => {
 
-    const product = props.product
+    let product = props.product
+
+    if(product === undefined) {
+        product = {
+            title: '',
+            price: '',
+            color: [],
+            size: [],
+            discount: null,
+        }
+    }
+
+    const dispatch = useDispatch()
+
+    let navigate = useNavigate()
+
+    const cartItems = useSelector((state) => state.cart.cartItems)
 
     const [previewImg, setPreviewImg] = useState(product.img1)
 
@@ -22,16 +42,49 @@ const ProductDetail = (props) => {
         setColor(product.color[0])
         setSize(product.size[0])
         setQuantity(1)
-        window.scrollTo(0, 0)
+        //window.scrollTo(0, 0)
     }, [product])
 
     const addToCart = () => {
-
+        const newItem = {
+            pathName: product.pathName,
+            color: color,
+            size: size,
+            price: product.price * (100 - product.discount) / 100,
+            quantity: quantity
+        }
+        if(dispatch(addItem(newItem))){
+            alert('Đã thêm sản phẩm vào giỏ hàng')
+        }
+        else{
+            alert('Error')
+        }
     }
 
     const goToCart = () => {
-        
+        const newItem = {
+            pathName: product.pathName,
+            color: color,
+            size: size,
+            price: product.price * (100 - product.discount) / 100,
+            quantity: quantity
+        }
+        if(dispatch(addItem(newItem))){
+            dispatch(removeModal())
+            navigate('/cart')
+        }
+        else {
+            alert('Error')
+        }
     }
+
+    useEffect(() => {
+        localStorage.setItem(
+            'cartItems', 
+            JSON.stringify(cartItems.sort((first, second) => 
+                first.id > second.id ? 1 : (first.id < second.id ? -1 : 0)))
+        )
+    }, [cartItems])
 
     return (
         <div className="detail">

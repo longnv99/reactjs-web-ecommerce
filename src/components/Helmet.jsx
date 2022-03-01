@@ -2,7 +2,7 @@ import React from 'react'
 
 const Helmet = (props) => {
 
-    document.title = 'Frica -' + props.title;
+    document.title = 'Frica - ' + props.title;
 
     return (
         <div>

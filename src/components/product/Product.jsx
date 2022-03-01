@@ -4,8 +4,13 @@ import './Product.scss'
 
 import Button from '../button/Button'
 import numberWithCommas from '../../utils/convertNumber'
+import { useDispatch } from 'react-redux'
+import { setModal } from '../../redux/actions/modal_action'
 
 const Product = (props) => {
+
+    const dispatch = useDispatch()
+
     return (
         <div className="product">
             <Link to={`/catalog/${props.pathName}`}>
@@ -42,8 +47,9 @@ const Product = (props) => {
                     icon='fa-solid fa-cart-plus'
                     animate={true}
                     size='sm'
+                    onClick={() => dispatch(setModal(props.pathName))}
                 >
-                    Thêm vào giỏ hàng
+                    Mua ngay
                 </Button>
             </div>
         </div>
