@@ -1,0 +1,65 @@
+@use '../../sass/' as *;
+
+.wrap {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    @include flex(center, center);
+    //padding-top: $header-height;
+
+    .form {
+        position: absolute;
+        width: 36%;
+        border-radius: 5px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.12);
+        padding: 2rem;
+        top: $header-height;
+
+        @include tablet {
+            width: 50%;
+        }
+
+        @include mobile {
+            width: 100%;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        &__item {
+            margin-top: 2rem;
+            
+            &__title {
+                font-size: 1.4rem;
+                font-weight: 400;
+                padding: 0.2rem 0;
+            }
+
+            &__input {
+                width: 100%;
+                font-size: 1.2rem;
+                border: 1px solid rgba(20, 58, 81, 0.1);
+                background-color: #f1f3f4;
+                padding: 0.9rem 0.7rem;
+                border-radius: 5px;
+            }
+        }
+
+        button {
+            margin-top: 2rem;
+        }
+
+        .option {
+            text-align: center;
+            font-size: 1rem;
+            margin-top: 2rem;
+
+            span {
+                text-decoration: underline;
+                color: $txt-second-color;
+                margin-left: 4px;
+            }
+        }
+    }
+}

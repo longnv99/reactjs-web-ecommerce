@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 
 import numberWithCommas from '../../utils/convertNumber'
 import { updateItem, removeItem } from '../../redux/actions/cart_action'
+import { db } from '../../firebase/firebaseConfig'
 
 const CartItem = (props) => {
 
@@ -17,6 +18,8 @@ const CartItem = (props) => {
 
     const cartItems = useSelector((state) => state.cart.cartItems)
 
+    const { user } = useSelector((state) => state.user)
+
 
     useEffect(() => {
         setItem(props.item)
@@ -24,11 +27,12 @@ const CartItem = (props) => {
     }, [props.item])
 
     useEffect(() => {
-        localStorage.setItem(
-            'cartItems', 
-            JSON.stringify(cartItems.sort((first, second) => 
-                first.id > second.id ? 1 : (first.id < second.id ? -1 : 0)))
-        )
+        //sort and update in firebase
+        if(user){
+            db.collection('user').doc(user.uid)
+            .update('cart', cartItems.sort((first, second) => 
+            first.id > second.id ? 1 : (first.id < second.id ? -1 : 0)))
+        }
     }, [cartItems])
 
     const updateQuantity = (opt) => {

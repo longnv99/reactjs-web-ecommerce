@@ -8,6 +8,7 @@ import numberWithCommas from '../../utils/convertNumber'
 import { addItem } from '../../redux/actions/cart_action'
 import { removeModal } from '../../redux/actions/modal_action'
 import { useNavigate } from 'react-router-dom'
+import { db } from '../../firebase/firebaseConfig'
 
 const ProductDetail = (props) => {
 
@@ -26,6 +27,8 @@ const ProductDetail = (props) => {
     const dispatch = useDispatch()
 
     let navigate = useNavigate()
+
+    const { user } = useSelector((state) => state.user)
 
     const cartItems = useSelector((state) => state.cart.cartItems)
 
@@ -46,44 +49,56 @@ const ProductDetail = (props) => {
     }, [product])
 
     const addToCart = () => {
-        const newItem = {
-            pathName: product.pathName,
-            color: color,
-            size: size,
-            price: product.price * (100 - product.discount) / 100,
-            quantity: quantity
-        }
-        if(dispatch(addItem(newItem))){
-            alert('Đã thêm sản phẩm vào giỏ hàng')
-        }
-        else{
-            alert('Error')
+        if(user) {
+            const newItem = {
+                pathName: product.pathName,
+                color: color,
+                size: size,
+                price: product.price * (100 - product.discount) / 100,
+                quantity: quantity
+            }
+            if(dispatch(addItem(newItem))){
+                alert('Đã thêm sản phẩm vào giỏ hàng')
+            }
+            else{
+                alert('Error')
+            }
+        }else {
+            dispatch(removeModal())
+            navigate('/login')
+            alert('Vui lòng đăng nhập tài khoản')
         }
     }
 
     const goToCart = () => {
-        const newItem = {
-            pathName: product.pathName,
-            color: color,
-            size: size,
-            price: product.price * (100 - product.discount) / 100,
-            quantity: quantity
-        }
-        if(dispatch(addItem(newItem))){
+        if(user) {
+            const newItem = {
+                pathName: product.pathName,
+                color: color,
+                size: size,
+                price: product.price * (100 - product.discount) / 100,
+                quantity: quantity
+            }
+            if(dispatch(addItem(newItem))){
+                dispatch(removeModal())
+                navigate('/cart')
+            }
+            else {
+                alert('Error')
+            }
+        }else {
             dispatch(removeModal())
-            navigate('/cart')
-        }
-        else {
-            alert('Error')
+            navigate('/login')
+            alert('Vui lòng đăng nhập tài khoản')
         }
     }
 
     useEffect(() => {
-        localStorage.setItem(
-            'cartItems', 
-            JSON.stringify(cartItems.sort((first, second) => 
-                first.id > second.id ? 1 : (first.id < second.id ? -1 : 0)))
-        )
+        if(user) {
+            db.collection('user').doc(user.uid)
+            .update('cart', cartItems.sort((first, second) => 
+            first.id > second.id ? 1 : (first.id < second.id ? -1 : 0)))
+        }
     }, [cartItems])
 
     return (

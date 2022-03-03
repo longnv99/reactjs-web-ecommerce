@@ -1,12 +1,12 @@
-import { ADD_TO_CART, UPDATE_ITEM, REMOVE_ITEM } from '../types/cart_types'
+import * as types from '../types/cart_types'
 
 const initialState = {
-    cartItems: localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [],
+    cartItems: [],
 }
 
 const cartReducer = (state = initialState, action) => {
     switch (action.type) {
-        case ADD_TO_CART: {
+        case types.ADD_TO_CART: {
             const newItem = action.payload;
 
             const duplicate = state.cartItems.filter(e => 
@@ -44,7 +44,7 @@ const cartReducer = (state = initialState, action) => {
                 }
             }
         }
-        case UPDATE_ITEM: {
+        case types.UPDATE_ITEM: {
             const newItem = action.payload
             const itemUpdate = state.cartItems.filter(e => 
                 e.pathName === newItem.pathName && e.color === newItem.color && e.size === newItem.size
@@ -71,7 +71,7 @@ const cartReducer = (state = initialState, action) => {
                 return state
             }
         }
-        case REMOVE_ITEM: {
+        case types.REMOVE_ITEM: {
             const item = action.payload
             return {
                 ...state,
@@ -80,6 +80,11 @@ const cartReducer = (state = initialState, action) => {
                 )
             }
         }
+        case types.SET_CART: 
+            return {
+                ...state,
+                cartItems: action.payload
+            }
         default:
             return state
     }

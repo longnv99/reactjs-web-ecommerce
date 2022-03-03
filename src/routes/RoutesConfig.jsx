@@ -3,8 +3,8 @@ import { Route, Routes } from 'react-router-dom'
 import HomePage from '../pages/HomePage'
 import CartPage from '../pages/CartPage'
 import ProductPage from '../pages/ProductPage'
-import LoginPage from '../pages/LoginPage'
-import RegisterPage from '../pages/RegisterPage'
+import LoginPage from '../pages/authenticate-page/LoginPage'
+import RegisterPage from '../pages/authenticate-page/RegisterPage'
 import CatalogPage from '../pages/catalog-page/CatalogPage'
 
 const RoutesConfig = () => {

@@ -2,7 +2,8 @@ import React, { useEffect, useRef } from 'react'
 import './Header.scss'
 import { Link, useLocation } from 'react-router-dom'
 import logo from '../../assets/images/logo.png'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { logoutInitiate } from '../../redux/actions/auth_action'
 
 const headerNav = [
     {
@@ -25,12 +26,16 @@ const headerNav = [
 
 const Header = () => {
 
+    const dispatch = useDispatch()
+
+    const { user } = useSelector((state) => state.user)
+    const cartItems = useSelector((state) => state.cart.cartItems)
+
     const { pathname } = useLocation();
     const activeNav = headerNav.findIndex(nav => nav.path === pathname);
     
     const headerRef = useRef(null)
-
-    const cartItems = useSelector((state) => state.cart.cartItems)
+    const userRef = useRef()
 
     let sum = 0;
 
@@ -46,13 +51,32 @@ const Header = () => {
                 headerRef.current.classList.remove('shrink')
             }
         })
+
+        //change z-index header
+        if(userRef.current) {
+            userRef.current.addEventListener("mouseenter", () => {
+                headerRef.current.classList.add('putup')
+            })
+            userRef.current.addEventListener("mouseleave", () => {
+                headerRef.current.classList.remove('putup')
+            })
+        }
+
         return () => {
             window.removeEventListener("scroll")
+            userRef.current.removeEventListener("mouseenter")
+            userRef.current.removeEventListener("mouseleave")
         };
     }, []);
 
     const menuLeft = useRef(null)
     const menuToggle = () => menuLeft.current.classList.toggle('active')
+
+    const handleLogout = () => {
+        if(user) {
+            dispatch(logoutInitiate())
+        }
+    }
 
     return (
         <div className="header" ref={headerRef}>
@@ -90,11 +114,6 @@ const Header = () => {
                     </div>
                     <div className="header__menu__right">
                         <div className="header__menu__item header__menu__right__item">
-                            <Link to='/login'>
-                                <i className="fa-solid fa-user"></i>
-                            </Link>
-                        </div>
-                        <div className="header__menu__item header__menu__right__item">
                             <Link to='/cart'>
                                 <i className="fa-solid fa-cart-shopping"></i>
                             </Link>
@@ -104,6 +123,29 @@ const Header = () => {
                                         {sum}
                                     </div>
                                 ) : null
+                            }
+                        </div>
+                        <div ref={userRef} className="header__menu__item header__menu__right__item">
+                            {
+                                user ? (
+                                    <Link to='#'>
+                                        <i className="fa-solid fa-right-to-bracket"></i>
+                                            <div className="user">
+                                                <div className="user__email">{user.email}</div>
+                                                <div 
+                                                    className="user__logout"
+                                                    onClick={handleLogout}
+                                                >
+                                                    <>Logout</>
+                                                    <i className="fa-solid fa-right-from-bracket"></i>
+                                                </div>
+                                            </div>
+                                    </Link>
+                                ) : (
+                                    <Link to='/login'>
+                                        <i className="fa-solid fa-user"></i>
+                                    </Link>
+                                )
                             }
                         </div>
                     </div>
