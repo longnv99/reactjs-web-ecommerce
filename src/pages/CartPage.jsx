@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import ReactDOM from "react-dom"
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import Helmet from '../components/Helmet'
 import '../components/cart-item/CartItem.scss'
@@ -20,6 +20,8 @@ const PayPalButton = window.paypal.Buttons.driver("react", { React, ReactDOM });
 const CartPage = () => {
 
     const dispatch = useDispatch()
+
+    let navigate = useNavigate()
 
     const { user } = useSelector((state) => state.user)
 
@@ -50,10 +52,17 @@ const CartPage = () => {
     }, [cartItems])
 
     const handleCheckout = () => {
-        if(cartItems.length > 0) {
-            setCheckout(true)
+        if(user){
+            if(cartItems.length > 0) {
+                setCheckout(true)
+            }else {
+                setCheckout(false)
+                alert('Bạn chưa có sản phẩm nào, tìm mua ngay !')
+                navigate('/catalog')
+            }
         }else {
-            setCheckout(false)
+            alert('Vui lòng đăng nhập tài khoản')
+            navigate('/login')
         }
     }
 
