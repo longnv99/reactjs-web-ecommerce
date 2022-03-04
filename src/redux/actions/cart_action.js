@@ -27,3 +27,9 @@ export const setCart = (cartItems) => {
         payload: cartItems
     }
 }
+
+export const successPayment = () => {
+    return {
+        type: types.SUCCESS_PAYMENT
+    }
+}

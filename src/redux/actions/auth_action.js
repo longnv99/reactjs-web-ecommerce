@@ -63,6 +63,7 @@ export const registerInitiate = (email, password) => {
             db.collection('user').doc(user.uid).set({
                 email: user.email,
                 cart: [],
+                payment_history: []
             })
         })
         .catch(error => dispatch(registerError(error.message)))

@@ -85,6 +85,11 @@ const cartReducer = (state = initialState, action) => {
                 ...state,
                 cartItems: action.payload
             }
+        case types.SUCCESS_PAYMENT:
+            return {
+                ...state,
+                cartItems: []
+            }
         default:
             return state
     }
