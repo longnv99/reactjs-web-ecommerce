@@ -1,74 +1,42 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import './Slider.scss'
 import { Link } from 'react-router-dom'
+import SwiperCore, { Autoplay, Pagination } from 'swiper';
+import { Swiper, SwiperSlide }from 'swiper/react';
 import Button from '../button/Button'
-
-import products from '../../assets/data/products'
 
 const Slider = (props) => {
 
-    console.log(products);
-
     const data = props.data
 
-    const timeOut = props.timeOut ? props.timeOut : 3000
-
-    const [activeSlide, setActiveSlide] = useState(0);
-
-    const nextSlide = useCallback(() => 
-        {
-            const index = activeSlide + 1 === data.length ? 0 : activeSlide + 1
-            setActiveSlide(index)
-        },
-        [activeSlide, data],
-    )
-
-    const prevSlide = () => {
-        const index = activeSlide - 1 < 0 ? data.length - 1 : activeSlide - 1
-        setActiveSlide(index)
-    }
-
-    useEffect(() => {
-        if (props.auto) {
-            const slideAuto = setInterval(() => {
-                nextSlide()
-            }, timeOut);
-            return () => {
-                clearInterval(slideAuto)
-            }
-        }
-    }, [nextSlide, timeOut, props])
+    SwiperCore.use([Autoplay, Pagination]);
 
     return (
         <div className="slider">
-            {
-                data.map((item, index) => (
-                    <SliderItem key={index} item={item} active={index === activeSlide}/>
-                ))
-            }
-            {
-                props.control ? (
-                    <div className="slider__control">
-                        <div className="slider__control__item" onClick={prevSlide}>
-                            <i className="fa-solid fa-chevron-left"></i>
-                        </div>
-                        <div className="slider__control__item">
-                            <div className="index">
-                                {activeSlide + 1}/{data.length}
-                            </div>
-                        </div>
-                        <div className="slider__control__item" onClick={nextSlide}>
-                            <i className="fa-solid fa-chevron-right"></i>
-                        </div>
-                    </div>
-                ) : null
-            }
+            <Swiper
+                modules={[Autoplay]}
+                grabCursor={true}
+                spaceBetween={0}
+                slidesPerView={1}
+                autoplay={{delay: 5000}}
+                pagination={{ clickable: true,  }}
+            >
+                {
+                    data.map((item, index) => (
+                        <SwiperSlide key={index}>
+                            {({ isActive }) => (
+                                <SliderItem item={item} active={`${isActive ? 'active' : ''}`}/>
+                            )}
+                        </SwiperSlide>
+                    ))
+                }
+            </Swiper>
         </div>
     )
 }
 
 const SliderItem = props => (
-    <div className={`slider__item ${props.active ? 'active' : ''}`} >
+    <div className={`slider__item ${props.active}`} >
         <div className="slider__item__info">
             <div className="slider__item__info__title">
                 <span>{props.item.title}</span>

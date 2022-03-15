@@ -19,11 +19,9 @@ const HomePage = () => {
         <Helmet title='Home'>
             <Slider 
                 data={sliderData}
-                control={true}
-                auto={false}
-                timeOut={4000}
             />
             <Section>
+                <SectionTitle>Chính sách hấp dẫn</SectionTitle>
                 <SectionBody>
                     <div className="grid">
                         {
@@ -42,7 +40,7 @@ const HomePage = () => {
             </Section>
             <div className="separate"></div>
             <Section>
-                <SectionTitle>SALE UPTO 66%</SectionTitle>
+                <SectionTitle>Sale Upto 66%</SectionTitle>
                 <img src={banner} alt="" className="banner"/>
                 <SectionBody>
                     <div className="grid">
