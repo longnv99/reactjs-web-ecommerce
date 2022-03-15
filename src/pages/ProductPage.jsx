@@ -5,6 +5,7 @@ import ProductDetail from '../components/product-detail/ProductDetail'
 import Helmet from '../components/Helmet'
 import Section, { SectionBody, SectionTitle } from '../components/section/Section'
 import Product from '../components/product/Product'
+import Comments from '../components/comments/Comments'
 
 import dataProduct from '../assets/data/products'
 
@@ -18,6 +19,13 @@ const ProductPage = () => {
             <Section>
                 <SectionBody>
                     <ProductDetail product={product}/>
+                </SectionBody>
+            </Section>
+            <div className="separate"></div>
+            <Section>
+                <SectionTitle>Đánh giá</SectionTitle>
+                <SectionBody>
+                    <Comments product={product}/>
                 </SectionBody>
             </Section>
             <div className="separate"></div>
