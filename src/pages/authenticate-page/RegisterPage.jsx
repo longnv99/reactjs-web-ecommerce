@@ -3,13 +3,13 @@ import './auth.scss'
 import { Link, useNavigate } from 'react-router-dom'
 import Button from '../../components/button/Button'
 import { useDispatch, useSelector } from 'react-redux'
-import { registerInitiate } from '../../redux/actions/auth_action'
+import { registerInitiate, clearError } from '../../redux/actions/auth_action'
 import Helmet from '../../components/Helmet'
+import inputs from '../../utils/inputs'
+import InputForm from '../../components/input/InputForm'
 
 
 const RegisterPage = () => {
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
 
     const dispatch = useDispatch()
 
@@ -17,19 +17,26 @@ const RegisterPage = () => {
 
     const navigate = useNavigate()
 
+    const [values, setValues] = useState({
+        email: '',
+        password: ''
+    })
+
     useEffect(() => {
         if(user) {
             navigate('/')
         }
         if(error !== null) {
             alert(error)
+            dispatch(clearError())
         }
     }, [user, error])
 
-    const handleRegister = () => {
-        dispatch(registerInitiate(email, password));
-        setEmail('');
-        setPassword('');
+    const handleRegister = (e) => {
+        if(e) {
+            e.preventDefault()
+            dispatch(registerInitiate(values.email, values.password))
+        }
     }
 
     return (
@@ -37,37 +44,35 @@ const RegisterPage = () => {
             <div className="container">
                 <div className="wrap">
                     <div className="form">
-                        <h2>Đăng ký tài khoản</h2>
-                        <div className="form__item">
-                            <div className="form__item__title">Tài khoản</div>
-                            <input 
-                                className="form__item__input" 
-                                type="email" 
-                                placeholder='Email'
-                                onChange={(e) => setEmail(e.target.value)}
-                            />
-                        </div>
-                        <div className="form__item">
-                            <div className="form__item__title">Mật khẩu</div>
-                            <input 
-                                className="form__item__input" 
-                                type="password" 
-                                placeholder='Mật khẩu' 
-                                onChange={(e) => setPassword(e.target.value)}
-                            />
-                        </div>
-                        <Button 
-                            size='block'
-                            onClick={handleRegister}
-                        >
-                            Đăng ký ngay
-                        </Button>
-                        <div className="option">
-                            <Link to='/login'>
-                                Bạn đã có tài khoản ?
-                                <span>Đăng nhập</span>
-                            </Link>
-                        </div>
+                        <form id='form-register' onSubmit={handleRegister}>
+                            <h2>Đăng ký tài khoản</h2>
+                            {
+                                inputs.map((input, index) => (
+                                    <InputForm 
+                                        key={index}
+                                        {...input}
+                                        value={values[input.name]}
+                                        onChange={(e) => setValues({
+                                            ...values,
+                                            [e.target.name]: e.target.value
+                                        })}
+                                    />
+                                ))
+                            }
+                            <Button 
+                                size='block'
+                                type='submit'
+                                form='form-register'
+                            >
+                                Đăng ký ngay
+                            </Button>
+                            <div className="option">
+                                <Link to='/login'>
+                                    Bạn đã có tài khoản ?
+                                    <span>Đăng nhập</span>
+                                </Link>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

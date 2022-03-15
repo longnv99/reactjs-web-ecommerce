@@ -52,6 +52,10 @@ export const setUser = (user) => ({
     payload: user
 })
 
+export const clearError = () => ({
+    type: types.CLEAR_ERROR
+})
+
 export const registerInitiate = (email, password) => {
     return function(dispatch) {
         dispatch(registerStart())

@@ -15,6 +15,8 @@ const Button = (props) => {
         <button
             className={`btn ${bg} ${size} ${animate} ${active}`}
             onClick={props.onClick ? () => props.onClick() : null}
+            type={props.type ? props.type : null}
+            form={props.form ? props.form : null}
         >
             <span className="btn__txt">{props.children}</span>
             {
